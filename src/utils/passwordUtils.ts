@@ -14,7 +14,7 @@ export const generatePassword = (options: PasswordOptions): string => {
   const numberChars = '0123456789';
   const symbolChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
   
-    let validChars = '';
+  let validChars = '';
   if (includeUppercase) validChars += uppercaseChars;
   if (includeLowercase) validChars += lowercaseChars;
   if (includeNumbers) validChars += numberChars;

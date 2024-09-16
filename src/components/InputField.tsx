@@ -5,22 +5,20 @@ interface InputFieldProps {
   type: string;
   value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
+  min?: number;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange, error }) => {
-  return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        className={`w-full p-2 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md`}
-      />
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-    </div>
-  );
-};
+const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange, min }) => (
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2">{label}</label>
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      min={min}
+      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    />
+  </div>
+);
 
 export default InputField;

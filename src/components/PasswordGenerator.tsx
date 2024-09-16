@@ -14,8 +14,13 @@ const PasswordGenerator: React.FC = () => {
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   const handleGeneratePassword = () => {
-    if (length < 6) {
-      setError('La longitud debe ser de al menos 6 caracteres.');
+    if (length < 4) {
+      setError('La longitud debe ser de al menos 4 caracteres.');
+      return;
+    }
+
+    if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSymbols) {
+      setError('Debes seleccionar al menos un tipo de caracter.');
       return;
     }
 
@@ -52,9 +57,8 @@ const PasswordGenerator: React.FC = () => {
         type="number"
         value={length}
         onChange={(e) => setLength(Number(e.target.value))}
+        min={4}
       />
-
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
 
       <div className="my-4">
         <label className="block text-sm font-medium text-gray-700">Incluir:</label>
@@ -72,6 +76,8 @@ const PasswordGenerator: React.FC = () => {
             <input type="checkbox" checked={includeSymbols} onChange={() => setIncludeSymbols(!includeSymbols)} className="mr-2"/>Símbolos
           </label>
         </div>
+
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </div>
 
       <button 
