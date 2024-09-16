@@ -1,3 +1,0 @@
-Agregar más cosas como home, login, imgs, etc
-Que sea responsivo
-Que la contra se aumente con barra
