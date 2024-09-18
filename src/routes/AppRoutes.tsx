@@ -6,6 +6,7 @@ import PasswordValidator from '../components/PasswordValidator';
 import PasswordHistory from '../components/PasswordHistory';
 import LoginPage from '../components/LoginPage';
 import RegisterPage from '../components/RegisterPage';
+import ErrorPage from '../components/ErrorPage';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/history" element={<PasswordHistory />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };

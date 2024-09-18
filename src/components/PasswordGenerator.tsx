@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { generatePassword, PasswordOptions } from '../utils/passwordUtils';
-import InputField from './InputField';
 import { FaClipboard, FaClipboardCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -15,11 +14,6 @@ const PasswordGenerator: React.FC = () => {
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   const handleGeneratePassword = () => {
-    if (length < 4) {
-      setError('La longitud debe ser de al menos 4 caracteres.');
-      return;
-    }
-
     if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSymbols) {
       setError('Debes seleccionar al menos un tipo de caracter.');
       return;
@@ -36,6 +30,13 @@ const PasswordGenerator: React.FC = () => {
     setPassword(generatedPassword);
     setCopySuccess(false);
     setError(null);
+
+    const generatedPasswords = JSON.parse(localStorage.getItem('generatedPasswords') || '[]');
+    if (!generatedPasswords.includes(generatedPassword)) {
+      generatedPasswords.push(generatedPassword);
+      if (generatedPasswords.length > 10) generatedPasswords.shift(); // Keep only the last 10 passwords
+      localStorage.setItem('generatedPasswords', JSON.stringify(generatedPasswords));
+    }
   };
 
   const handleCopyPassword = () => {
@@ -50,17 +51,21 @@ const PasswordGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center pt-16 bg-gray-100">
+    <div className="min-h-screen flex justify-center pt-16 bg-gray-200">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl h-full">
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Generador de Contraseñas</h2>
 
-        <InputField
-          label="Longitud de la contraseña"
-          type="number"
-          value={length}
-          onChange={(e) => setLength(Number(e.target.value))}
-          min={4}
-        />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Longitud de la contraseña: {length}</label>
+          <input
+            type="range"
+            min={4}
+            max={30}
+            value={length}
+            onChange={(e) => setLength(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
 
         <div className="my-4">
           <label className="block text-sm font-medium text-gray-700">Incluir:</label>
@@ -86,19 +91,19 @@ const PasswordGenerator: React.FC = () => {
           Generar Contraseña
         </button>
 
-        <Link to="/validator" className="w-full bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 mt-2">
+        <Link to="/validator" className="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 mt-2 text-center block">
           Validar Contraseña
         </Link>
 
         {password && (
-          <div className="mt-4 flex items-center justify-between bg-gray-100 p-2 rounded-md">
+          <div className="mt-4 flex items-center justify-between bg-gray-200 p-2 rounded-md font-semibold">
             <span className="text-lg">{password}</span>
 
             <button onClick={handleCopyPassword}>
               {copySuccess ? (
                 <FaClipboardCheck className="h-6 w-6 text-green-500" />
               ) : (
-                <FaClipboard className="h-6 w-6 text-gray-500 hover:text-blue-500" />
+                <FaClipboard className="h-6 w-6 text-gray-500 hover:text-gray-600" />
               )}
             </button>
           </div>
