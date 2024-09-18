@@ -1,22 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { FaTrash } from 'react-icons/fa';
+import { FaClipboard, FaClipboardCheck, FaTrash } from 'react-icons/fa';
+import { collection, getDocs, deleteDoc, doc, db } from '../firebase';
+
+interface Password {
+  id: string;
+  password: string;
+}
 
 const PasswordHistory: React.FC = () => {
-  const [generatedPasswords, setGeneratedPasswords] = useState<string[]>([]);
-  const [savedPasswords, setSavedPasswords] = useState<string[]>([]);
+  const [generatedPasswords, setGeneratedPasswords] = useState<Password[]>([]);
+  const [savedPasswords, setSavedPasswords] = useState<Password[]>([]);
+  const [copySuccessId, setCopySuccessId] = useState<string | null>(null);
 
   useEffect(() => {
-    const passwords = JSON.parse(localStorage.getItem('generatedPasswords') || '[]');
-    setGeneratedPasswords(passwords.slice(-10));
+    const fetchPasswords = async () => {
+      try {
+        const generatedSnapshot = await getDocs(collection(db, 'generatedPasswords'));
+        const generatedData = generatedSnapshot.docs.map(doc => ({
+          id: doc.id,
+          password: doc.data().password,
+        }));
+        setGeneratedPasswords(generatedData);
 
-    const saved = JSON.parse(localStorage.getItem('savedPasswords') || '[]');
-    setSavedPasswords(saved.slice(-10));
+        const savedSnapshot = await getDocs(collection(db, 'savedPasswords'));
+        const savedData = savedSnapshot.docs.map(doc => ({
+          id: doc.id,
+          password: doc.data().password,
+        }));
+        setSavedPasswords(savedData);
+      } catch (error) {
+        console.error('Error al obtener las contraseñas desde Firestore:', error);
+      }
+    };
+
+    fetchPasswords();
   }, []);
 
-  const handleDeletePassword = (password: string) => {
-    const updatedPasswords = savedPasswords.filter(p => p !== password);
-    setSavedPasswords(updatedPasswords);
-    localStorage.setItem('savedPasswords', JSON.stringify(updatedPasswords));
+  const handleDeletePassword = async (passwordId: string, collectionName: string) => {
+    try {
+      await deleteDoc(doc(db, collectionName, passwordId));
+      if (collectionName === 'savedPasswords') {
+        setSavedPasswords(savedPasswords.filter(p => p.id !== passwordId));
+      } else if (collectionName === 'generatedPasswords') {
+        setGeneratedPasswords(generatedPasswords.filter(p => p.id !== passwordId));
+      }
+    } catch (error) {
+      console.error('Error al eliminar la contraseña:', error);
+    }
+  };
+
+  const handleCopyPassword = async (password: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(password);
+      setCopySuccessId(id);
+      setTimeout(() => {
+        setCopySuccessId(null);
+      }, 2000);
+    } catch (error) {
+      console.error('Error al copiar la contraseña:', error);
+    }
   };
 
   return (
@@ -25,30 +67,51 @@ const PasswordHistory: React.FC = () => {
         <h1 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Historial de Contraseñas</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className='text-center'>
             <h2 className="text-lg font-semibold mb-2">Contraseñas Generadas</h2>
-            <ul className="list-disc list-inside">
-              {generatedPasswords.map((password, index) => (
-                <li key={index} className="mb-1">{password}</li>
-              ))}
-            </ul>
+
+            {generatedPasswords.length > 0 ? (
+              <ul className="list-disc list-inside">
+                {generatedPasswords.map(({ id, password }) => (
+                  <li key={id} className="mb-1 flex justify-between items-center">
+                    <span>{password}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500">No hay contraseñas generadas.</p>
+            )}
           </div>
 
-          <div>
+          <div className='text-center'>
             <h2 className="text-lg font-semibold mb-2">Contraseñas Guardadas</h2>
-            <ul className="list-disc list-inside">
-              {savedPasswords.map((password, index) => (
-                <li key={index} className="mb-1 flex justify-between items-center">
-                  <span>{password}</span>
-                  <button
-                    onClick={() => handleDeletePassword(password)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <FaTrash />
-                  </button>
-                </li>
-              ))}
-            </ul>
+
+            {savedPasswords.length > 0 ? (
+              <ul className="list-disc list-inside">
+                {savedPasswords.map(({ id, password }) => (
+                  <li key={id} className="mb-1 flex justify-between items-center">
+                    <span>{password}</span>
+                    <div className='flex justify-end space-x-2 text-lg'>
+                      <button onClick={() => handleCopyPassword(password, id)}>
+                        {copySuccessId === id ? (
+                          <FaClipboardCheck className="text-green-500" />
+                        ) : (
+                          <FaClipboard className="text-gray-500 hover:text-gray-600" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => handleDeletePassword(id, 'savedPasswords')}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500">No hay contraseñas guardadas.</p>
+            )}
           </div>
         </div>
       </div>

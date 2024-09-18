@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { generatePassword, PasswordOptions } from '../utils/passwordUtils';
 import { FaClipboard, FaClipboardCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { db, collection, addDoc } from '../firebase';
 
 const PasswordGenerator: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -14,6 +15,18 @@ const PasswordGenerator: React.FC = () => {
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   const handleGeneratePassword = () => {
+    const savePasswordToFirestore = async (generatedPassword: string) => {
+      try {
+        const docRef = await addDoc(collection(db, 'generatedPasswords'), {
+          password: generatedPassword,
+          createdAt: new Date(),
+        });
+        console.log("Contraseña guardada con ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error al guardar la contraseña: ", e);
+      }
+    };
+
     if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSymbols) {
       setError('Debes seleccionar al menos un tipo de caracter.');
       return;
@@ -31,12 +44,7 @@ const PasswordGenerator: React.FC = () => {
     setCopySuccess(false);
     setError(null);
 
-    const generatedPasswords = JSON.parse(localStorage.getItem('generatedPasswords') || '[]');
-    if (!generatedPasswords.includes(generatedPassword)) {
-      generatedPasswords.push(generatedPassword);
-      if (generatedPasswords.length > 10) generatedPasswords.shift(); // Keep only the last 10 passwords
-      localStorage.setItem('generatedPasswords', JSON.stringify(generatedPasswords));
-    }
+    savePasswordToFirestore(generatedPassword);
   };
 
   const handleCopyPassword = () => {

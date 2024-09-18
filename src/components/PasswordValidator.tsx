@@ -3,6 +3,7 @@ import { validatePasswordStrength } from '../utils/validationUtils';
 import PasswordStrengthMeter from './PasswordStrengthMeter';
 import { FaPaste } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { db, collection, addDoc } from '../firebase';
 
 const PasswordValidator: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -35,20 +36,21 @@ const PasswordValidator: React.FC = () => {
     setStrength(0);
   };
 
-  const handleSavePassword = () => {
+  const handleSavePassword = async () => {
     if (password.trim() === '') return;
 
-    const savedPasswords = JSON.parse(localStorage.getItem('savedPasswords') || '[]');
+    setIsSaving(true);
 
-    if (!savedPasswords.includes(password)) {
-      savedPasswords.push(password);
-      if (savedPasswords.length > 10) savedPasswords.shift();
-
-      localStorage.setItem('savedPasswords', JSON.stringify(savedPasswords));
-
-      setIsSaving(true);
+    try {
+      await addDoc(collection(db, 'savedPasswords'), {
+        password: password,
+        createdAt: new Date(),
+      });
 
       setTimeout(() => setIsSaving(false), 2000);
+    } catch (error) {
+      console.error('Error al guardar la contraseña en Firestore:', error);
+      setIsSaving(false);
     }
   };
 
