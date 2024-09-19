@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, signInWithEmailAndPassword } from '../firebase';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +9,7 @@ const LoginPage: React.FC = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -64,6 +66,7 @@ const LoginPage: React.FC = () => {
               } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
               placeholder="Ingresa tu correo"
             />
+
             {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
           </div>
 
@@ -71,16 +74,30 @@ const LoginPage: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700" htmlFor="password">
               Contraseña
             </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={`mt-1 block w-full px-4 py-2 border ${
-                passwordError ? 'border-red-500' : 'border-gray-300'
-              } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
-              placeholder="Ingresa tu contraseña"
-            />
+            <div className="relative flex items-center">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={`mt-1 block w-full px-4 py-2 border ${
+                  passwordError ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+                placeholder="Ingresa tu contraseña"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 top-2 flex items-center text-sm"
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="h-5 w-5 text-gray-700" />
+                ) : (
+                  <FaEye className="h-5 w-5 text-gray-700" />
+                )}
+              </button>
+            </div>
+
             {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
           </div>
 
@@ -94,9 +111,9 @@ const LoginPage: React.FC = () => {
               />
               <span className="ml-2 text-sm text-gray-600">Recordarme</span>
             </label>
-            <a href="#" className="text-sm text-blue-600 hover:underline">
+            <Link to='/password-reset' className="text-sm text-blue-600 hover:underline">
               ¿Olvidaste tu contraseña?
-            </a>
+            </Link>
           </div>
 
           <button

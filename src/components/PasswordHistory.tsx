@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaClipboard, FaClipboardCheck, FaTrash } from 'react-icons/fa';
 import { collection, getDocs, deleteDoc, doc, db } from '../firebase';
+import { auth, onAuthStateChanged } from '../firebase';
 
 interface Password {
   id: string;
@@ -11,30 +13,40 @@ const PasswordHistory: React.FC = () => {
   const [generatedPasswords, setGeneratedPasswords] = useState<Password[]>([]);
   const [savedPasswords, setSavedPasswords] = useState<Password[]>([]);
   const [copySuccessId, setCopySuccessId] = useState<string | null>(null);
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPasswords = async () => {
-      try {
-        const generatedSnapshot = await getDocs(collection(db, 'generatedPasswords'));
-        const generatedData = generatedSnapshot.docs.map(doc => ({
-          id: doc.id,
-          password: doc.data().password,
-        }));
-        setGeneratedPasswords(generatedData);
-
-        const savedSnapshot = await getDocs(collection(db, 'savedPasswords'));
-        const savedData = savedSnapshot.docs.map(doc => ({
-          id: doc.id,
-          password: doc.data().password,
-        }));
-        setSavedPasswords(savedData);
-      } catch (error) {
-        console.error('Error al obtener las contraseñas desde Firestore:', error);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate('/login');
+      } else {
+        fetchPasswords();
       }
-    };
+    });
 
-    fetchPasswords();
-  }, []);
+    return () => unsubscribe();
+  }, [navigate]);
+
+  const fetchPasswords = async () => {
+    try {
+      const generatedSnapshot = await getDocs(collection(db, 'generatedPasswords'));
+      const generatedData = generatedSnapshot.docs.map(doc => ({
+        id: doc.id,
+        password: doc.data().password,
+      }));
+      setGeneratedPasswords(generatedData);
+
+      const savedSnapshot = await getDocs(collection(db, 'savedPasswords'));
+      const savedData = savedSnapshot.docs.map(doc => ({
+        id: doc.id,
+        password: doc.data().password,
+      }));
+      setSavedPasswords(savedData);
+    } catch (error) {
+      console.error('Error al obtener las contraseñas desde Firestore:', error);
+    }
+  };
 
   const handleDeletePassword = async (passwordId: string, collectionName: string) => {
     try {

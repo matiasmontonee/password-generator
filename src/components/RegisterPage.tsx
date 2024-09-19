@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, createUserWithEmailAndPassword } from '../firebase';
+import { auth, createUserWithEmailAndPassword, signOut, updateProfile } from '../firebase';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const RegisterPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -12,6 +13,8 @@ const RegisterPage: React.FC = () => {
   const [passwordError, setPasswordError] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
 
   const navigate = useNavigate();
 
@@ -57,7 +60,15 @@ const RegisterPage: React.FC = () => {
 
     if (valid) {
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        const user = userCredential.user;
+
+        await updateProfile(user, {
+          displayName: name,
+        });
+
+        await signOut(auth);
         navigate('/login');
       } catch (error: any) {
         if (error.code === 'auth/email-already-in-use') {
@@ -88,6 +99,7 @@ const RegisterPage: React.FC = () => {
               className={`mt-1 block w-full px-4 py-2 border ${nameError ? 'border-red-500' : 'border-gray-300'}`}
               placeholder="Ingresa tu nombre"
             />
+
             {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
           </div>
 
@@ -103,6 +115,7 @@ const RegisterPage: React.FC = () => {
               className={`mt-1 block w-full px-4 py-2 border ${emailError ? 'border-red-500' : 'border-gray-300'}`}
               placeholder="Ingresa tu correo"
             />
+
             {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
           </div>
 
@@ -110,14 +123,27 @@ const RegisterPage: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700" htmlFor="password">
               Contraseña
             </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={`mt-1 block w-full px-4 py-2 border ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="Ingresa tu contraseña"
-            />
+            <div className='relative flex items-center'>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={`mt-1 block w-full px-4 py-2 border ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
+                placeholder="Ingresa tu contraseña"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 top-2 flex items-center text-sm"
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="h-5 w-5 text-gray-700" />
+                ) : (
+                  <FaEye className="h-5 w-5 text-gray-700" />
+                )}
+              </button>
+            </div>
             {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
           </div>
 
@@ -125,14 +151,27 @@ const RegisterPage: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700" htmlFor="confirmPassword">
               Confirmar Contraseña
             </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className={`mt-1 block w-full px-4 py-2 border ${confirmPasswordError ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="Confirma tu contraseña"
-            />
+            <div className='relative flex items-center'>
+              <input
+                type={showPasswordConfirmation ? 'text' : 'password'}
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={`mt-1 block w-full px-4 py-2 border ${confirmPasswordError ? 'border-red-500' : 'border-gray-300'}`}
+                placeholder="Confirma tu contraseña"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                className="absolute inset-y-0 right-0 pr-3 top-2 flex items-center text-sm"
+              >
+                {showPasswordConfirmation ? (
+                  <FaEyeSlash className="h-5 w-5 text-gray-700" />
+                ) : (
+                  <FaEye className="h-5 w-5 text-gray-700" />
+                )}
+              </button>
+            </div>
             {confirmPasswordError && <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>}
           </div>
 

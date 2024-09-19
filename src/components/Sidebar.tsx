@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaCheckCircle, FaUserPlus, FaHome, FaKey, FaSignInAlt, FaHistory, FaMoon, FaSun } from 'react-icons/fa';
+import { FaBars, FaCheckCircle, FaHome, FaKey, FaSignInAlt, FaHistory, FaMoon, FaSun, FaUserAlt } from 'react-icons/fa';
 import safenest from '../assets/images/safenest.png';
+import { auth } from '../firebase';
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -14,6 +16,18 @@ const Sidebar: React.FC = () => {
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div>
@@ -40,21 +54,29 @@ const Sidebar: React.FC = () => {
                 <FaCheckCircle className='mr-3' />Validador
               </li>
             </Link>
-            <Link to="/history">
-              <li className="flex items-center py-4 px-6 hover:bg-gray-700">
-                <FaHistory className='mr-3' />Historial
-              </li>
-            </Link>
-            <Link to="/login">
-              <li className="flex items-center py-4 px-6 hover:bg-gray-700">
-                <FaSignInAlt className='mr-3' />Iniciar Sesión
-              </li>
-            </Link>
-            <Link to="/register">
-              <li className="flex items-center py-4 px-6 hover:bg-gray-700">
-                <FaUserPlus className='mr-3' />Registrarse
-              </li>
-            </Link>
+
+            {user && ( // Si el usuario está autenticado, muestra la opción de Historial
+              <Link to="/history">
+                <li className="flex items-center py-4 px-6 hover:bg-gray-700">
+                  <FaHistory className='mr-3' />Historial
+                </li>
+              </Link>
+            )}
+            
+            {user ? ( // Si el usuario está autenticado, muestra la opción de Perfil
+              <Link to="/profile">
+                <li className="flex items-center py-4 px-6 hover:bg-gray-700">
+                  <FaUserAlt className='mr-3' />Perfil
+                </li>
+              </Link>
+            ) : ( // Si el usuario no está autenticado, muestra la opción de Iniciar Sesión
+              <Link to="/login">
+                <li className="flex items-center py-4 px-6 hover:bg-gray-700">
+                  <FaSignInAlt className='mr-3' />Iniciar Sesión
+                </li>
+              </Link>
+            )}
+
             <button onClick={toggleTheme} className="flex items-center py-4 px-6 hover:bg-gray-700 w-full">
               <span className='mr-3'>{isDarkMode ? <FaSun size={20} /> : <FaMoon size={20} />}</span>
               <span>{isDarkMode ? 'Tema claro' : 'Tema oscuro'}</span>
@@ -67,7 +89,7 @@ const Sidebar: React.FC = () => {
           <img src={safenest} alt="SafeNest" className='w-10 h-10' />
         </div>
       </div>
-      
+
       <div className={`flex-1 transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'}`}>
       </div>
     </div>
