@@ -69,6 +69,7 @@ const PasswordValidator: React.FC = () => {
             value={password}
             onChange={handlePasswordChange}
             placeholder="Ingresa tu contraseña"
+            maxLength={30}
             className="w-full p-2 border border-gray-300 rounded-md pr-10"
           />
         
