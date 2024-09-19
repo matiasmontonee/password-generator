@@ -88,7 +88,7 @@ const RegisterPage: React.FC = () => {
 
         <form onSubmit={handleRegister}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="name">
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode" htmlFor="name">
               Nombre Completo
             </label>
             <input
@@ -96,7 +96,7 @@ const RegisterPage: React.FC = () => {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={`mt-1 block w-full px-4 py-2 border ${nameError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`mt-1 block w-full px-4 py-2 border input-dark-mode ${nameError ? 'border-red-500' : 'border-gray-300'}`}
               placeholder="Ingresa tu nombre"
             />
 
@@ -104,7 +104,7 @@ const RegisterPage: React.FC = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="email">
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode" htmlFor="email">
               Correo Electrónico
             </label>
             <input
@@ -112,7 +112,7 @@ const RegisterPage: React.FC = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`mt-1 block w-full px-4 py-2 border ${emailError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`mt-1 block w-full px-4 py-2 border input-dark-mode ${emailError ? 'border-red-500' : 'border-gray-300'}`}
               placeholder="Ingresa tu correo"
             />
 
@@ -120,7 +120,7 @@ const RegisterPage: React.FC = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="password">
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode" htmlFor="password">
               Contraseña
             </label>
             <div className='relative flex items-center'>
@@ -129,18 +129,18 @@ const RegisterPage: React.FC = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 block w-full px-4 py-2 border ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
+                className={`mt-1 block w-full px-4 py-2 border input-dark-mode ${passwordError ? 'border-red-500' : 'border-gray-300'}`}
                 placeholder="Ingresa tu contraseña"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 top-2 flex items-center text-sm"
+                className="absolute inset-y-0 right-0 pr-3 top-1.5 flex items-center text-sm"
               >
                 {showPassword ? (
-                  <FaEyeSlash className="h-5 w-5 text-gray-700" />
+                  <FaEyeSlash className="h-5 w-5 text-gray-700 hover:text-gray-500 eye-dark-mode" />
                 ) : (
-                  <FaEye className="h-5 w-5 text-gray-700" />
+                  <FaEye className="h-5 w-5 text-gray-700 hover:text-gray-500 eye-dark-mode" />
                 )}
               </button>
             </div>
@@ -148,7 +148,7 @@ const RegisterPage: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="confirmPassword">
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode" htmlFor="confirmPassword">
               Confirmar Contraseña
             </label>
             <div className='relative flex items-center'>
@@ -157,18 +157,18 @@ const RegisterPage: React.FC = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`mt-1 block w-full px-4 py-2 border ${confirmPasswordError ? 'border-red-500' : 'border-gray-300'}`}
+                className={`mt-1 block w-full px-4 py-2 border input-dark-mode ${confirmPasswordError ? 'border-red-500' : 'border-gray-300'}`}
                 placeholder="Confirma tu contraseña"
               />
               <button
                 type="button"
                 onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
-                className="absolute inset-y-0 right-0 pr-3 top-2 flex items-center text-sm"
+                className="absolute inset-y-0 right-0 pr-3 top-1.5 flex items-center text-sm"
               >
                 {showPasswordConfirmation ? (
-                  <FaEyeSlash className="h-5 w-5 text-gray-700" />
+                  <FaEyeSlash className="h-5 w-5 text-gray-700 hover:text-gray-500 eye-dark-mode" />
                 ) : (
-                  <FaEye className="h-5 w-5 text-gray-700" />
+                  <FaEye className="h-5 w-5 text-gray-700 hover:text-gray-500 eye-dark-mode" />
                 )}
               </button>
             </div>
@@ -177,13 +177,13 @@ const RegisterPage: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors primary-button-dark-mode"
           >
             Registrarse
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-600">
+        <p className="mt-4 text-center text-sm text-gray-600 label-dark-mode">
           ¿Ya tienes una cuenta?{' '}
           <Link to="/login" className="text-blue-600 hover:underline">
             Inicia sesión aquí

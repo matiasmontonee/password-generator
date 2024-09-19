@@ -29,6 +29,10 @@ body.dark-mode .input-dark-mode {
   background-color: #2f353d;
 }
 
+body.dark-mode .edit-dark-mode {
+  background-color: #2f353d;
+}
+
 /* Botones */
 
 body.dark-mode .primary-button-dark-mode {
@@ -53,10 +57,34 @@ body.dark-mode .disabled-button-dark-mode {
   background-color: #01357c;
 }
 
+body.dark-mode .confirm-button-dark-mode {
+  background-color: #1d9b4b;
+}
+
+body.dark-mode .confirm-button-dark-mode:hover {
+  background-color: #15793a;
+}
+
+body.dark-mode .close-button-dark-mode {
+  background-color: #b92d2d;
+}
+
+body.dark-mode .close-button-dark-mode:hover {
+  background-color: #962626;
+}
+
 /* Íconos */
 
 body.dark-mode .icon-dark-mode:hover {
-  color: #3b82f6;
+  color: #687691;
+}
+
+body.dark-mode .eye-dark-mode {
+  color: #687691;
+}
+
+body.dark-mode .eye-dark-mode:hover {
+  color: #899bbe;
 }
 
 /* Imágenes */

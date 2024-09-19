@@ -38,7 +38,7 @@ const Sidebar: React.FC = () => {
       </button>
 
       {/* Sidebar */}
-      <div className={`sidebar fixed top-0 left-0 h-full bg-gray-800 text-white transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64`}>
+      <div className={`sidebar fixed top-0 left-0 h-full bg-gray-800 text-white transition-transform transform label-dark-mode ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64`}>
         <nav className="mt-16">
           <ul>
             <Link to="/">

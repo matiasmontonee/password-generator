@@ -53,13 +53,13 @@ const ProfilePage: React.FC = () => {
       
         <div>        
           <div>
-            <label className="block text-sm font-medium text-gray-700">Nombre</label>
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode">Nombre</label>
             {editMode ? (
               <input
                 type="text"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm edit-dark-mode focus:ring-blue-500 focus:border-blue-500"
               />
             ) : (
               <input
@@ -72,7 +72,7 @@ const ProfilePage: React.FC = () => {
           </div>
 
           <div className="my-4">
-            <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode">Correo Electrónico</label>
             <input
               type="text"
               value={email}
@@ -84,14 +84,14 @@ const ProfilePage: React.FC = () => {
           {editMode ? (
             <button
               onClick={handleSaveName}
-              className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition-colors w-full mb-4"
+              className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition-colors w-full mb-4 confirm-button-dark-mode"
             >
               Guardar Nombre
             </button>
           ) : (
             <button
               onClick={() => setEditMode(true)}
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors w-full mb-4"
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors w-full mb-4 primary-button-dark-mode"
             >
               Editar Nombre
             </button>
@@ -99,7 +99,7 @@ const ProfilePage: React.FC = () => {
 
           <button
             onClick={handleSignOut}
-            className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors w-full"
+            className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors w-full close-button-dark-mode"
           >
             Cerrar Sesión
           </button>

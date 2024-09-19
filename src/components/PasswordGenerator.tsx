@@ -115,7 +115,7 @@ const PasswordGenerator: React.FC = () => {
               {copySuccess ? (
                 <FaClipboardCheck className="h-6 w-6 text-green-500" />
               ) : (
-                <FaClipboard className="h-6 w-6 text-gray-500 hover:text-gray-600" />
+                <FaClipboard className="h-6 w-6 text-gray-500 hover:text-gray-600 icon-dark-mode" />
               )}
             </button>
           </div>

@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
 
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="email">
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode" htmlFor="email">
               Correo Electrónico
             </label>
             <input
@@ -61,7 +61,7 @@ const LoginPage: React.FC = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`mt-1 block w-full px-4 py-2 border ${
+              className={`mt-1 block w-full px-4 py-2 border input-dark-mode ${
                 emailError ? 'border-red-500' : 'border-gray-300'
               } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
               placeholder="Ingresa tu correo"
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="password">
+            <label className="block text-sm font-medium text-gray-700 label-dark-mode" htmlFor="password">
               Contraseña
             </label>
             <div className="relative flex items-center">
@@ -80,7 +80,7 @@ const LoginPage: React.FC = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 block w-full px-4 py-2 border ${
+                className={`mt-1 block w-full px-4 py-2 border input-dark-mode ${
                   passwordError ? 'border-red-500' : 'border-gray-300'
                 } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
                 placeholder="Ingresa tu contraseña"
@@ -88,12 +88,12 @@ const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 top-2 flex items-center text-sm"
+                className="absolute inset-y-0 right-0 pr-3 top-1.5 flex items-center text-sm"
               >
                 {showPassword ? (
-                  <FaEyeSlash className="h-5 w-5 text-gray-700" />
+                  <FaEyeSlash className="h-5 w-5 text-gray-700 hover:text-gray-500 eye-dark-mode" />
                 ) : (
-                  <FaEye className="h-5 w-5 text-gray-700" />
+                  <FaEye className="h-5 w-5 text-gray-700 hover:text-gray-500 eye-dark-mode" />
                 )}
               </button>
             </div>
@@ -109,7 +109,7 @@ const LoginPage: React.FC = () => {
                 type="checkbox"
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <span className="ml-2 text-sm text-gray-600">Recordarme</span>
+              <span className="ml-2 text-sm text-gray-600 label-dark-mode">Recordarme</span>
             </label>
             <Link to='/password-reset' className="text-sm text-blue-600 hover:underline">
               ¿Olvidaste tu contraseña?
@@ -118,13 +118,13 @@ const LoginPage: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors primary-button-dark-mode"
           >
             Iniciar Sesión
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-600">
+        <p className="mt-4 text-center text-sm text-gray-600 label-dark-mode">
           ¿No tienes una cuenta?{' '}
           <Link to="/register" className="text-blue-600 hover:underline">
             Regístrate aquí

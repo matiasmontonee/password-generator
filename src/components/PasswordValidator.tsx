@@ -81,7 +81,7 @@ const PasswordValidator: React.FC = () => {
         
           <button
             onClick={handlePastePassword}
-            className="absolute inset-y-0 right-0 top-6 flex items-center pr-2 text-gray-500 hover:text-blue-500 icon-dark-mode"
+            className="absolute inset-y-0 right-0 top-6 flex items-center pr-2 text-gray-500 hover:text-gray-600 icon-dark-mode"
           >
             <FaPaste className="h-5 w-5" />
           </button>
