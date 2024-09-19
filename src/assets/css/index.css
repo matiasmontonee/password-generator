@@ -1,3 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Modo Oscuro */
+
+/* Fondos */
+
+body.dark-mode .bg-gray-200 {
+  background-color: #171e27;
+}
+
+body.dark-mode .bg-white {
+  background-color: #2f353d;
+  color: #f5f5f5;
+}
+
+/* Textos */
+
+body.dark-mode .text-gray-500 {
+  color: #9ca3af;
+}
+
+body.dark-mode .label-dark-mode {
+  color: #f5f5f5;
+}
+
+body.dark-mode .input-dark-mode {
+  background-color: #2f353d;
+}
+
+/* Botones */
+
+body.dark-mode .primary-button-dark-mode {
+  background-color: #024199;
+  color: #f5f5f5;
+}
+
+body.dark-mode .primary-button-dark-mode:hover {
+  background-color: #01357c;
+}
+
+body.dark-mode .secondary-button-dark-mode {
+  background-color: #3e4b61;
+  color: #f5f5f5;
+}
+
+body.dark-mode .secondary-button-dark-mode:hover {
+  background-color: #394355;
+}
+
+body.dark-mode .disabled-button-dark-mode {
+  background-color: #01357c;
+}
+
+/* Íconos */
+
+body.dark-mode .icon-dark-mode:hover {
+  color: #3b82f6;
+}
+
+/* Imágenes */
+
+body.dark-mode .img-dark-mode {
+  background-color: #171e27;
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { generatePassword, PasswordOptions } from '../utils/passwordUtils';
 import { FaClipboard, FaClipboardCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { db, collection, addDoc } from '../firebase';
+import { db, collection, addDoc, auth } from '../firebase';
 
 const PasswordGenerator: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -15,18 +15,6 @@ const PasswordGenerator: React.FC = () => {
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   const handleGeneratePassword = () => {
-    const savePasswordToFirestore = async (generatedPassword: string) => {
-      try {
-        const docRef = await addDoc(collection(db, 'generatedPasswords'), {
-          password: generatedPassword,
-          createdAt: new Date(),
-        });
-        console.log("Contraseña guardada con ID: ", docRef.id);
-      } catch (e) {
-        console.error("Error al guardar la contraseña: ", e);
-      }
-    };
-
     if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSymbols) {
       setError('Debes seleccionar al menos un tipo de caracter.');
       return;
@@ -44,7 +32,23 @@ const PasswordGenerator: React.FC = () => {
     setCopySuccess(false);
     setError(null);
 
-    savePasswordToFirestore(generatedPassword);
+    if (auth.currentUser) { // Solo guarda la contraseña si el usuario está logueado
+      savePasswordToFirestore(generatedPassword);
+    }
+  };
+
+  const savePasswordToFirestore = async (generatedPassword: string) => {
+    if (auth.currentUser) {
+      try {
+        await addDoc(collection(db, 'generatedPasswords'), {
+          password: generatedPassword,
+          createdAt: new Date(),
+          userId: auth.currentUser.uid,
+        });
+      } catch (e) {
+        console.error("Error al guardar la contraseña: ", e);
+      }
+    }
   };
 
   const handleCopyPassword = () => {
@@ -64,7 +68,7 @@ const PasswordGenerator: React.FC = () => {
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Generador de Contraseñas</h2>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Longitud de la contraseña: {length}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2 label-dark-mode">Longitud de la contraseña: {length}</label>
           <input
             type="range"
             min={4}
@@ -76,7 +80,7 @@ const PasswordGenerator: React.FC = () => {
         </div>
 
         <div className="my-4">
-          <label className="block text-sm font-medium text-gray-700">Incluir:</label>
+          <label className="block text-sm font-medium text-gray-700 label-dark-mode">Incluir:</label>
           <div className="mt-2 space-y-1">
             <label className="flex items-center">
               <input type="checkbox" checked={includeUppercase} onChange={() => setIncludeUppercase(!includeUppercase)} className="mr-2"/>Mayúsculas
@@ -95,11 +99,11 @@ const PasswordGenerator: React.FC = () => {
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
 
-        <button onClick={handleGeneratePassword} className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
+        <button onClick={handleGeneratePassword} className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 primary-button-dark-mode">
           Generar Contraseña
         </button>
 
-        <Link to="/validator" className="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 mt-2 text-center block">
+        <Link to="/validator" className="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 mt-2 text-center block secondary-button-dark-mode">
           Validar Contraseña
         </Link>
 

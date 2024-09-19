@@ -26,8 +26,10 @@ const Sidebar: React.FC = () => {
       }
     });
 
+    document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
+
     return () => unsubscribe();
-  }, []);
+  }, [isDarkMode]);
 
   return (
     <div>
@@ -36,7 +38,7 @@ const Sidebar: React.FC = () => {
       </button>
 
       {/* Sidebar */}
-      <div className={`fixed top-0 left-0 h-full bg-gray-800 text-white transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64`}>
+      <div className={`sidebar fixed top-0 left-0 h-full bg-gray-800 text-white transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64`}>
         <nav className="mt-16">
           <ul>
             <Link to="/">
@@ -55,21 +57,21 @@ const Sidebar: React.FC = () => {
               </li>
             </Link>
 
-            {user && ( // Si el usuario está autenticado, muestra la opción de Historial
+            {user && (
               <Link to="/history">
                 <li className="flex items-center py-4 px-6 hover:bg-gray-700">
                   <FaHistory className='mr-3' />Historial
                 </li>
               </Link>
             )}
-            
-            {user ? ( // Si el usuario está autenticado, muestra la opción de Perfil
+
+            {user ? (
               <Link to="/profile">
                 <li className="flex items-center py-4 px-6 hover:bg-gray-700">
                   <FaUserAlt className='mr-3' />Perfil
                 </li>
               </Link>
-            ) : ( // Si el usuario no está autenticado, muestra la opción de Iniciar Sesión
+            ) : (
               <Link to="/login">
                 <li className="flex items-center py-4 px-6 hover:bg-gray-700">
                   <FaSignInAlt className='mr-3' />Iniciar Sesión

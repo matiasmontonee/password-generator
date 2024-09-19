@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaClipboard, FaClipboardCheck, FaTrash } from 'react-icons/fa';
-import { collection, getDocs, deleteDoc, doc, db } from '../firebase';
+import { collection, getDocs, deleteDoc, doc, db, query, where } from '../firebase';
 import { auth, onAuthStateChanged } from '../firebase';
 
 interface Password {
@@ -21,23 +21,28 @@ const PasswordHistory: React.FC = () => {
       if (!user) {
         navigate('/login');
       } else {
-        fetchPasswords();
+        const currentUserId = user.uid;
+        fetchPasswords(currentUserId);
       }
     });
 
     return () => unsubscribe();
   }, [navigate]);
 
-  const fetchPasswords = async () => {
+  const fetchPasswords = async (userId: string) => {
     try {
-      const generatedSnapshot = await getDocs(collection(db, 'generatedPasswords'));
+      // Contraseña generada por usuario actual
+      const generatedQuery = query(collection(db, 'generatedPasswords'), where('userId', '==', userId));
+      const generatedSnapshot = await getDocs(generatedQuery);
       const generatedData = generatedSnapshot.docs.map(doc => ({
         id: doc.id,
         password: doc.data().password,
       }));
       setGeneratedPasswords(generatedData);
 
-      const savedSnapshot = await getDocs(collection(db, 'savedPasswords'));
+      // Contraseña guardada por usuario actual
+      const savedQuery = query(collection(db, 'savedPasswords'), where('userId', '==', userId));
+      const savedSnapshot = await getDocs(savedQuery);
       const savedData = savedSnapshot.docs.map(doc => ({
         id: doc.id,
         password: doc.data().password,
