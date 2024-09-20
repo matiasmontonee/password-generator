@@ -42,7 +42,7 @@ const PasswordResetPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center bg-gray-200 pt-20 pb-8 sm:pb-0 sm:pt-16">
+    <div className="min-h-screen flex justify-center bg-gray-200 pt-20 sm:pt-16">
       <div className="bg-white p-8 rounded-lg shadow-lg w-5/6 sm:max-w-xl h-full">
         <h1 className="text-xl sm:text-2xl font-semibold mb-6 text-center">Recuperar Contraseña</h1>
 
@@ -75,7 +75,7 @@ const PasswordResetPage: React.FC = () => {
         <p className="mt-4 text-center text-sm text-gray-600 label-dark-mode">
           ¿Recordaste tu contraseña?{' '}
           <Link to="/login" className="text-blue-600 hover:underline">
-            Inicia sesión acá
+            Iniciar sesión
           </Link>
         </p>
       </div>

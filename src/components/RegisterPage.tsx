@@ -51,7 +51,7 @@ const RegisterPage: React.FC = () => {
     }
 
     if (!confirmPassword) {
-      setConfirmPasswordError('La confirmación de la contraseña es obligatoria.');
+      setConfirmPasswordError('La confirmación es obligatoria.');
       valid = false;
     } else if (password !== confirmPassword) {
       setConfirmPasswordError('Las contraseñas no coinciden.');
