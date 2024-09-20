@@ -63,9 +63,9 @@ const PasswordGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center pt-16 bg-gray-200">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl h-full">
-        <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Generador de Contraseñas</h2>
+    <div className="min-h-screen flex justify-center bg-gray-200 pt-20 pb-8 sm:pb-0 sm:pt-16">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-5/6 sm:max-w-xl h-full">
+        <h1 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Generador de Contraseñas</h1>
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2 label-dark-mode">Longitud de la contraseña: {length}</label>

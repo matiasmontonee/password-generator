@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div className='min-h-screen flex justify-center pt-20 sm:pt-16 bg-gray-200'>
+    <div className='min-h-screen flex justify-center bg-gray-200 pt-20 pb-8 sm:pb-0 sm:pt-16'>
       <div className={`bg-white p-6 rounded-lg shadow-lg w-5/6 sm:max-w-xl h-full transition-opacity duration-1000 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
         <div className="flex items-center justify-center space-x-2">
           <h1 className="text-xl sm:text-2xl font-bold">¡Bienvenido a SafeNest!</h1>

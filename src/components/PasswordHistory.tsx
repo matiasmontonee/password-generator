@@ -87,8 +87,8 @@ const PasswordHistory: React.FC = () => {
   };
 
   return (
-    <div className='min-h-screen flex justify-center pt-16 bg-gray-200'>
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl h-full">
+    <div className='min-h-screen flex justify-center bg-gray-200 pt-20 pb-8 sm:pb-0 sm:pt-16'>
+      <div className="bg-white p-6 rounded-lg shadow-lg w-5/6 sm:max-w-2xl h-full">
         <h1 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Historial de Contraseñas</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

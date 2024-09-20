@@ -47,9 +47,9 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center pt-16 bg-gray-200">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl h-full">
-        <h1 className="text-2xl font-semibold mb-6 text-center">Iniciar Sesión</h1>
+    <div className="min-h-screen flex justify-center bg-gray-200 pt-20 pb-8 sm:pb-0 sm:pt-16">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-5/6 sm:max-w-xl h-full">
+        <h1 className="text-xl sm:text-2xl font-semibold mb-6 text-center">Iniciar Sesión</h1>
 
         <form onSubmit={handleLogin}>
           <div className="mb-4">
@@ -109,10 +109,10 @@ const LoginPage: React.FC = () => {
                 type="checkbox"
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <span className="ml-2 text-sm text-gray-600 label-dark-mode">Recordarme</span>
+              <span className="ml-1 sm:ml-2 text-sm text-gray-600 label-dark-mode">Recordarme</span>
             </label>
             <Link to='/password-reset' className="text-sm text-blue-600 hover:underline">
-              ¿Olvidaste tu contraseña?
+              Olvidé mi contraseña
             </Link>
           </div>
 
@@ -125,9 +125,9 @@ const LoginPage: React.FC = () => {
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600 label-dark-mode">
-          ¿No tienes una cuenta?{' '}
+          ¿No tenés una cuenta?{' '}
           <Link to="/register" className="text-blue-600 hover:underline">
-            Regístrate aquí
+            Registrate acá
           </Link>
         </p>
       </div>

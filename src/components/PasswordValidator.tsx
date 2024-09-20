@@ -61,9 +61,9 @@ const PasswordValidator: React.FC = () => {
   };
 
   return (
-    <div className='min-h-screen flex justify-center pt-16 bg-gray-200'>
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl h-full">
-        <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Validador de Contraseñas</h2>
+    <div className='min-h-screen flex justify-center bg-gray-200 pt-20 pb-8 sm:pb-0 sm:pt-16'>
+      <div className="bg-white p-6 rounded-lg shadow-lg w-5/6 sm:max-w-xl h-full">
+        <h1 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Validador de Contraseñas</h1>
 
         <div className="relative w-full">
           <label className="block text-sm font-medium text-gray-700 mb-1 label-dark-mode" htmlFor="password">
