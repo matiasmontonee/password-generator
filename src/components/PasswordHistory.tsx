@@ -99,7 +99,7 @@ const PasswordHistory: React.FC = () => {
               <ul className="list-disc list-inside" style={{ wordBreak: 'break-all' }}>
                 {generatedPasswords.map(({ id, password }) => (
                   <li key={id} className="mb-1 flex justify-between items-center">
-                    <span className='mr-'>{password}</span>
+                    <span>{password}</span>
                   </li>
                 ))}
               </ul>
