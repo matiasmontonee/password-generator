@@ -88,18 +88,18 @@ const PasswordHistory: React.FC = () => {
 
   return (
     <div className='min-h-screen flex justify-center bg-gray-200 pt-20 pb-8 sm:pb-0 sm:pt-16'>
-      <div className="bg-white p-6 rounded-lg shadow-lg w-5/6 sm:max-w-2xl h-full">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-5/6 sm:max-w-3xl h-full">
         <h1 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Historial de Contraseñas</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className='text-center'>
             <h2 className="text-lg font-semibold mb-2">Contraseñas Generadas</h2>
 
             {generatedPasswords.length > 0 ? (
-              <ul className="list-disc list-inside">
+              <ul className="list-disc list-inside" style={{ wordBreak: 'break-all' }}>
                 {generatedPasswords.map(({ id, password }) => (
                   <li key={id} className="mb-1 flex justify-between items-center">
-                    <span>{password}</span>
+                    <span className='mr-'>{password}</span>
                   </li>
                 ))}
               </ul>
@@ -112,10 +112,10 @@ const PasswordHistory: React.FC = () => {
             <h2 className="text-lg font-semibold mb-2">Contraseñas Guardadas</h2>
 
             {savedPasswords.length > 0 ? (
-              <ul className="list-disc list-inside">
+              <ul className="list-disc list-inside" style={{ wordBreak: 'break-all' }}>
                 {savedPasswords.map(({ id, password }) => (
                   <li key={id} className="mb-1 flex justify-between items-center">
-                    <span>{password}</span>
+                    <span className='mr-4'>{password}</span>
                     <div className='flex justify-end space-x-2 text-lg'>
                       <button onClick={() => handleCopyPassword(password, id)}>
                         {copySuccessId === id ? (

@@ -75,7 +75,7 @@ const PasswordResetPage: React.FC = () => {
         <p className="mt-4 text-center text-sm text-gray-600 label-dark-mode">
           ¿Recordaste tu contraseña?{' '}
           <Link to="/login" className="text-blue-600 hover:underline">
-            Iniciar sesión
+            Iniciá sesión
           </Link>
         </p>
       </div>

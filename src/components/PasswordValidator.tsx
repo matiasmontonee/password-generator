@@ -104,7 +104,7 @@ const PasswordValidator: React.FC = () => {
           className={`w-full p-2 rounded-md mt-4 mb-2 transition-colors duration-500 ${auth.currentUser ? (isSaving ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-600 primary-button-dark-mode') : 'bg-blue-300 text-gray-500 cursor-not-allowed disabled-button-dark-mode'} text-white`}
           disabled={!auth.currentUser}
         >
-          {auth.currentUser ? (isSaving ? '¡Contraseña Guardada!' : 'Guardar Contraseña') : 'Guardar Contraseña (debes iniciar sesión)'}
+          {auth.currentUser ? (isSaving ? '¡Contraseña Guardada!' : 'Guardar Contraseña') : 'Guardar (debes iniciar sesión)'}
         </button>
 
         <Link to="/generator" className="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 text-center block secondary-button-dark-mode">

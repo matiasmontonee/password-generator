@@ -108,10 +108,11 @@ const PasswordGenerator: React.FC = () => {
         </Link>
 
         {password && (
-          <div className="mt-4 flex items-center justify-between bg-gray-200 p-2 rounded-md font-semibold">
-            <span className="text-lg">{password}</span>
-
-            <button onClick={handleCopyPassword}>
+          <div className="mt-4 bg-gray-200 p-2 rounded-md font-semibold flex">
+            <div className="flex-1 break-words text-md sm:text-lg" style={{ wordBreak: 'break-all' }}>
+              {password}
+            </div>
+            <button onClick={handleCopyPassword} className="ml-4 flex-shrink-0">
               {copySuccess ? (
                 <FaClipboardCheck className="h-6 w-6 text-green-500" />
               ) : (
